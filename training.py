@@ -4,7 +4,6 @@ import random
 import numpy as np
 import time
 import pickle 
-import requests
 
 emotions = ["neutral", "anger", "contempt", "disgust", "fear", "happy", "sadness", "surprise"] #Emotion list
 
@@ -44,11 +43,12 @@ def run_recognizer():
                    # print("hi")
                     print("lul\n")
             pred, conf = fishface.predict(prediction_data)
-            r = requests.post('192.168.20.20:1234', data = {'result':pred, 'conf':conf})
+            print(pred)
 
   
 
 fishface.load("trained_classifier")
+
 run_recognizer()
 
 # Thanks to van Gent, P. (2016). Emotion Recognition With Python, OpenCV and a Face Dataset. A tech blog about fun things with Python and embedded electronics. Retrieved from:
