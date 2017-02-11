@@ -105,20 +105,20 @@ def run_recognizer(training_data, training_labels):
 # print "\n\nend score:", np.mean(metascore), "percent correct!"
 training_data, training_labels= make_sets()
 # print(type(training_data),type(training_labels))
-with open("data", 'wb') as f:
-    pickle.dump(training_data, f)
-with open("labels", 'wb') as f:
-    pickle.dump(training_labels, f)
-# with open("data", 'rb') as f:
-#     training_data = pickle.load(f)
+# with open("data", 'wb') as f:
+#     pickle.dump(training_data, f)
+# with open("labels", 'wb') as f:
+    # pickle.dump(training_labels, f)
+with open("data", 'rb') as f:
+    training_data = pickle.load(f)
+with open("labels", 'rb') as f:
+    training_labels = pickle.load(f)   
+print(training_labels)
 # with open("labels", 'rb') as f:
 #     training_labels = pickle.load(f)   
-# print(training_labels)
-# with open("labels", 'rb') as f:
-#     training_labels = pickle.load(f)   
-fishface.train(training_data, np.asarray(training_labels))
-fishface.save("trained_classifier")
-# fishface.load("trained_classifier")
+# fishface.train(training_data, np.asarray(training_labels))
+# fishface.save("trained_classifier")
+fishface.load("trained_classifier")
 print("wutface")
 # with open("trained", 'wb') as f:
 #     pickle.dump(x, f)
