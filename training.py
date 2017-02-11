@@ -31,7 +31,7 @@ def make_sets():
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) #convert to grayscale
             training_data.append(gray) #append image array to training data list
             training_labels.append(emotions.index(emotion))
-
+    # print(training_labels)
     return training_data, training_labels
 
 def run_recognizer(training_data, training_labels):
@@ -105,14 +105,15 @@ def run_recognizer(training_data, training_labels):
 # print "\n\nend score:", np.mean(metascore), "percent correct!"
 training_data, training_labels= make_sets()
 # print(type(training_data),type(training_labels))
-# with open("data", 'wb') as f:
-#     pickle.dump(training_data, f)
-# with open("labels", 'wb') as f:
-#     pickle.dump(training_labels, f)
-with open("data", 'rb') as f:
-    training_data = pickle.load(f)
-with open("labels", 'rb') as f:
-    training_labels = pickle.load(f)   
+with open("data", 'wb') as f:
+    pickle.dump(training_data, f)
+with open("labels", 'wb') as f:
+    pickle.dump(training_labels, f)
+# with open("data", 'rb') as f:
+#     training_data = pickle.load(f)
+# with open("labels", 'rb') as f:
+#     training_labels = pickle.load(f)   
+# print(training_labels)
 # with open("labels", 'rb') as f:
 #     training_labels = pickle.load(f)   
 fishface.train(training_data, np.asarray(training_labels))
