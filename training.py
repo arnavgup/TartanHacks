@@ -9,7 +9,7 @@ emotions = ["neutral", "anger", "contempt", "disgust", "fear", "happy", "sadness
 # emotions = ["neutral", "anger", "happy", "sadness", "surprise"] #Emotion list
 
 fishface = cv2.createFisherFaceRecognizer() #Initialize fisher face classifier
-mapping = [0,-1,-1,-1,-1,1,-1,1]
+# mapping = [0,-1,-1,-1,-1,1,-1,1]
 data = {}
 
 def get_files(emotion): #Define function to get file list, randomly shuffle it and split 80/20
@@ -30,7 +30,7 @@ def make_sets():
             image = cv2.imread(item) #open image
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) #convert to grayscale
             training_data.append(gray) #append image array to training data list
-            training_labels.append(mapping[emotions.index(emotion)])
+            training_labels.append(emotions.index(emotion))
 
     return training_data, training_labels
 
@@ -67,13 +67,13 @@ def run_recognizer(training_data, training_labels):
         try:
             # print(emotion, filenumber)
             gray = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
-            print("size fixed \n",gray)
+            # print("size fixed \n",gray)
         except:
            # print("hi")
             print("lul\n")#If error, pass file
         prediction_data.append(gray)
         prediction_labels.append(1)
-    cv2.imwrite("output.jpeg",frame)
+    cv2.imwrite("output.jpeg",gray)
     
     # video_capture.release()
     # cv2.destroyAllWindows()
@@ -104,15 +104,15 @@ def run_recognizer(training_data, training_labels):
 
 # print "\n\nend score:", np.mean(metascore), "percent correct!"
 training_data, training_labels= make_sets()
-print(type(training_data),type(training_labels))
-with open("data", 'wb') as f:
-    pickle.dump(training_data, f)
-with open("labels", 'wb') as f:
-    pickle.dump(training_labels, f)
-# with open("data", 'rb') as f:
-#     training_data = pickle.load(f)
-# with open("labels", 'rb') as f:
-#     training_labels = pickle.load(f)   
+# print(type(training_data),type(training_labels))
+# with open("data", 'wb') as f:
+#     pickle.dump(training_data, f)
+# with open("labels", 'wb') as f:
+#     pickle.dump(training_labels, f)
+with open("data", 'rb') as f:
+    training_data = pickle.load(f)
+with open("labels", 'rb') as f:
+    training_labels = pickle.load(f)   
 # with open("labels", 'rb') as f:
 #     training_labels = pickle.load(f)   
 fishface.train(training_data, np.asarray(training_labels))
@@ -126,7 +126,7 @@ print("wutface")
 while True:
     print("gg")
     run_recognizer(training_data, training_labels)
-    time.sleep(2)
+    # time.sleep(2)
 # while True:
 #     time.sleep(5)
 #     run_recognizer(training_data, training_labels)
