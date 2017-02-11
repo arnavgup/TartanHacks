@@ -65,10 +65,11 @@ def run_recognizer():
                     prediction_data=(gray)
 
                 except:
+                    pass
                    # print("hi")
-                    print("lul\n")
+                    # print("lul\n")
             pred, conf = fishface.predict(prediction_data)
-            print(pred)
+            # print(pred)
 
             if(pred in {1,2,3,4,6} and count>20):
                 count=0
