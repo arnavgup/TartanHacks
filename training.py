@@ -86,8 +86,9 @@ def run_recognizer():
                 # first_link = first_result.find_element_by_tag_name('a')
                 # first_link.send_keys(Keys.CONTROL + '1')
                 
-                # driver.find_element_by_tag_name('body').send_keys(Keys.COMMAND + 't') 
                 time.sleep(1)
+                driver.find_element_by_tag_name('body').send_keys('f') 
+                
                 # k = PyKeyboard()
                 # k.press_key('F')
                 # youtubePlayer = driver.find_element_by_id("page-container") 
