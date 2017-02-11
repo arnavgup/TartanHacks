@@ -34,18 +34,16 @@ def make_sets():
     # print(training_labels)
     return training_data, training_labels
 
-def run_recognizer(training_data, training_labels):
-    faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-    
-    video_capture = cv2.VideoCapture(0)
+def run_recognizer():
     # # Capture frame-by-frame
     # ret, frame = video_capture.read()
     # # for processing
     # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    
-    faces = ()
-    
-    while (len(faces)==0):
+    faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+    video_capture = cv2.VideoCapture(0)
+     
+    while True:
+        faces = ()
         ret, frame = video_capture.read()
         cv2.imshow('Video', frame)
     # for processing
@@ -57,36 +55,38 @@ def run_recognizer(training_data, training_labels):
             minSize=(30, 30),
             flags=cv2.cv.CV_HAAR_SCALE_IMAGE
         )
-    
+        
     # Draw a rectangle around the faces
-    prediction_data = []
-    prediction_labels = []
-    for (x, y, w, h) in faces:
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        gray = gray[y:y+h, x:x+w] #Cut the frame to size
-        try:
-            # print(emotion, filenumber)
-            gray = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
-            # print("size fixed \n",gray)
-        except:
-           # print("hi")
-            print("lul\n")#If error, pass file
-        prediction_data.append(gray)
-        prediction_labels.append(1)
-    cv2.imwrite("output.jpeg",gray)
+        # prediction_data = 0
+        facePresent = 0
+        for (x, y, w, h) in faces:
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+            gray = gray[y:y+h, x:x+w] #Cut the frame to size
+            try:
+                # print(emotion, filenumber)
+                gray = cv2.resize(gray, (350, 350)) #Resize face so all images have same size
+                prediction_data=(gray)
+                facePresent=1
+                # print("size fixed \n",gray)
+            except:
+               # print("hi")
+                print("lul\n")#If error, pass file
+           
+    # cv2.imwrite("output.jpeg",gray)
     
     # video_capture.release()
     # cv2.destroyAllWindows()
-    print "training fisher face classifier"
-    print "size of training set is:", len(training_labels), "images"
+    # print "training fisher face classifier"
+    # print "size of training set is:", len(training_labels), "images"
 
 
-    print "predicting classification set"
-    cnt = 0
-    correct = 0
-    incorrect = 0
-    pred, conf = fishface.predict(gray)
-    print(pred, prediction_labels[cnt])
+    # print "predicting classification set"
+        cnt = 0
+        correct = 0
+        incorrect = 0
+        if (facePresent):
+            pred, conf = fishface.predict(prediction_data)
+            print(pred)
     #     if pred == prediction_labels[cnt]:
     #         correct += 1
     #         cnt += 1
@@ -103,17 +103,17 @@ def run_recognizer(training_data, training_labels):
 # metascore.append(correct)
 
 # print "\n\nend score:", np.mean(metascore), "percent correct!"
-training_data, training_labels= make_sets()
+# training_data, training_labels= make_sets()
 # print(type(training_data),type(training_labels))
 # with open("data", 'wb') as f:
 #     pickle.dump(training_data, f)
 # with open("labels", 'wb') as f:
     # pickle.dump(training_labels, f)
-with open("data", 'rb') as f:
-    training_data = pickle.load(f)
-with open("labels", 'rb') as f:
-    training_labels = pickle.load(f)   
-print(training_labels)
+# with open("data", 'rb') as f:
+#     training_data = pickle.load(f)
+# with open("labels", 'rb') as f:
+#     training_labels = pickle.load(f)   
+# print(training_labels)
 # with open("labels", 'rb') as f:
 #     training_labels = pickle.load(f)   
 # fishface.train(training_data, np.asarray(training_labels))
@@ -124,9 +124,9 @@ print("wutface")
 #     pickle.dump(x, f)
 
 # print((training_data),(training_labels)) 
-while True:
-    print("gg")
-    run_recognizer(training_data, training_labels)
+
+
+run_recognizer()
     # time.sleep(2)
 # while True:
 #     time.sleep(5)
