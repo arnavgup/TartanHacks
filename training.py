@@ -9,6 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import os
 import random
 from pykeyboard import PyKeyboard
@@ -27,6 +28,7 @@ def getVideo():
     vids=[]
     vids.append(("/watch?v=dQw4w9WgXcQ&t=0m43s",17))
     vids.append(("/watch?v=ZZ5LpwO-An4",12))
+    vids.append(("/watch?v=76_03o9bEPQ&t=0m35s",23))
     return vids[random.randrange(0,len(vids))]
 
 
@@ -36,7 +38,7 @@ def run_recognizer():
 
     # ret, frame = video_capture.read()
     # cv2.imshow('Video', frame)
-    count=0
+    count=10
     while True:
         # Capture frame-by-frame
         ret, frame = video_capture.read()
@@ -73,9 +75,16 @@ def run_recognizer():
                 webURL = "https://youtube.com"
                 webAdd,wtime = getVideo()
                 print("play vid")
+
+                # chop = webdriver.ChromeOptions()
+                # chop.add_extension('Adblock-Plus_v1.12.4.crx')
+                # driver = webdriver.Chrome("./chromedriver",chrome_options = chop)
                 driver = webdriver.Chrome("./chromedriver")
                 driver.get(webURL+webAdd)
-                time.sleep(2)
+                # first_link = first_result.find_element_by_tag_name('a')
+                # first_link.send_keys(Keys.CONTROL + '1')
+                
+                time.sleep(1)
                 driver.find_element_by_tag_name('body').send_keys('f') 
                 # k = PyKeyboard()
                 # k.press_key('F')
